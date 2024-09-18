@@ -77,17 +77,31 @@ public class Todo{
         System.out.println("task deleted!\n");
     }
 
+    private void deleteAll(){
+      if(todoList.size() == 0)
+        System.out.println("todo list is empty");
+      else{
+        todoList.removeAll(todoList);
+        save();
+        System.out.println("deleted all tasks");
+      }
+    }
+
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         Todo fun = new Todo();
         String taskString;
         int ch = 0;
         System.out.println("welcome to ur cli based todo!\n");
-        while(ch != 5){
-            System.out.println("1 > create task\n2 > read\n3 > update\n4 > delete\n5 > exit");
+        while(ch != 6){
+            System.out.println("1 > create task\n2 > read\n3 > update\n4 > delete\n5 > delete all\n6 > exit");
             System.out.println();
-            ch = sc.nextInt();
-            sc.nextLine();
+            try {
+             ch = sc.nextInt();
+            } catch (Exception e) {
+              System.out.println("duh");
+            }
+              sc.nextLine();
             switch(ch){
                 case 1 : System.out.println("write a task to add!");
                     taskString = sc.nextLine();
@@ -95,21 +109,33 @@ public class Todo{
                     break;
                 case 2 : fun.read();
                          break;
-                case 3 : System.out.println("enter the task no to update!");
-                    int up = sc.nextInt();
-                    sc.nextLine();
-                    System.out.println("enter the updated task!");
-                    taskString = sc.nextLine();
-                    fun.update(up, taskString);
-                    break;
+                case 3 : try{
+                  int up;
+                  System.out.println("enter the task no to update!");
+                  up = sc.nextInt();
+                  System.out.println("duh");
+                
+                  sc.nextLine();
+                  System.out.println("enter the updated task!");
+                  taskString = sc.nextLine();
+                  fun.update(up, taskString);
+                }
+                catch(Exception e){
+                  System.out.println("duh");
+                }
+                break;
                 case 4 : System.out.println("enter the task no to delete!");
                     int del = sc.nextInt();
                     sc.nextLine();
                     fun.delete(del);
                     break;
-                case 5 : System.out.println("owari da!");
+                case 5 : fun.deleteAll();
+                         break;
+                case 6 : System.out.println("owari da!");
                     break;
-                default : break;
+                
+                default : System.out.println("choose correct number duh!");
+                         break;
             }
         }
     }
